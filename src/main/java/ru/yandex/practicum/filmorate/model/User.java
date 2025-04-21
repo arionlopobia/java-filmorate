@@ -23,7 +23,6 @@ public class User {
     @Pattern(regexp = "^\\S+$", message = "Логин не должен содержать пробелов")
     private String login;
 
-    @NotBlank
     private String name;
 
     @PastOrPresent
