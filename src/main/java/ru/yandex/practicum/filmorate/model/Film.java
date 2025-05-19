@@ -7,8 +7,11 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Getter
@@ -26,4 +29,6 @@ public class Film {
 
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     private Duration duration;
+
+    private Set<Long> likes = new HashSet<>();
 }
