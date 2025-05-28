@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.controller.UserController;
+import ru.yandex.practicum.filmorate.model.FriendshipStatus;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 import ru.yandex.practicum.filmorate.validation.ValidationException;
@@ -15,7 +16,6 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserStorage userStorage;
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
-
 
     public UserService(UserStorage userStorage) {
         this.userStorage = userStorage;
@@ -53,7 +53,6 @@ public class UserService {
         return user;
     }
 
-
     public Collection<User> getAllUsers() {
         return userStorage.getAll();
     }
@@ -66,8 +65,10 @@ public class UserService {
             throw new NoSuchElementException("Пользователь не найден.");
         }
 
-        user.getFriends().add(friendId);
-        friend.getFriends().add(userId);
+        user.getFriends().put(friendId, FriendshipStatus.UNCONFIRMED);
+        friend.getFriends().put(userId, FriendshipStatus.CONFIRMED);
+
+        log.info("Пользователь {} добавил {} в друзья", userId, friendId);
     }
 
     public void removeFriend(Long userId, Long friendId) {
@@ -80,6 +81,8 @@ public class UserService {
 
         user.getFriends().remove(friendId);
         friend.getFriends().remove(userId);
+
+        log.info("Пользователь {} удалил {} из друзей", userId, friendId);
     }
 
     public List<User> getCommonFriends(Long userId, Long otherUserId) {
@@ -90,8 +93,8 @@ public class UserService {
             throw new NoSuchElementException("Пользователь не найден.");
         }
 
-        Set<Long> commonIds = new HashSet<>(user.getFriends());
-        commonIds.retainAll(otherUser.getFriends());
+        Set<Long> commonIds = new HashSet<>(user.getFriends().keySet());
+        commonIds.retainAll(otherUser.getFriends().keySet());
 
         return commonIds.stream()
                 .map(userStorage::get)
@@ -105,15 +108,10 @@ public class UserService {
             throw new NoSuchElementException("Пользователь не найден.");
         }
 
-        if (user.getFriends() == null) {
-            return List.of();
-        }
-
-        return user.getFriends().stream()
+        return user.getFriends().keySet().stream()
                 .map(userStorage::get)
                 .collect(Collectors.toList());
     }
-
 
     private void validate(User user) {
         if (user.getLogin().contains(" ")) {
@@ -128,5 +126,4 @@ public class UserService {
                 .max()
                 .orElse(0) + 1;
     }
-
 }
