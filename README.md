@@ -1,7 +1,9 @@
 # java-filmorate
+
 Template repository for Filmorate project.
 ![ER Diagram](C:\Users\User\IdeaProjects\java-filmorate\diagram\Untitled.png)
-Диаграмма описывает основные сущности приложения Filmorate: пользователей, фильмы, жанры, возрастные рейтинги, лайки и дружбу между пользователями.
+Диаграмма описывает основные сущности приложения Filmorate: пользователей, фильмы, жанры, возрастные рейтинги, лайки и
+дружбу между пользователями.
 > Диаграмма описывает основные сущности приложения **Filmorate**:
 >
 > - пользователей;
@@ -64,7 +66,7 @@ WHERE id = 1;
 
 -- Добавить жанр фильму
 INSERT INTO film_genres (film_id, genre_id)
-VALUES (1, 3);  -- где 3 = "Триллер"
+VALUES (1, 3); -- где 3 = "Триллер"
 
 -- Получить все жанры для фильма
 SELECT g.name
