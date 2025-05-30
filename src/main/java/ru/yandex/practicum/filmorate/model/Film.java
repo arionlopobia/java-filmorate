@@ -35,7 +35,6 @@ public class Film {
 
     private List<Genre> genres;
 
-    @NotNull
     private MpaRating mpa;
 
 }
