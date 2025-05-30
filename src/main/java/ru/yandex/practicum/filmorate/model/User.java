@@ -1,17 +1,16 @@
 package ru.yandex.practicum.filmorate.model;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
-import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @Getter
@@ -32,5 +31,5 @@ public class User {
     @PastOrPresent
     private LocalDate birthday;
 
-    private Set<Long> friends = new HashSet<>();
+    private Map<Long, FriendshipStatus> friends = new HashMap<>();
 }
