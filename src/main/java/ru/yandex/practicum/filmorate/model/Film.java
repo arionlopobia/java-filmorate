@@ -33,9 +33,9 @@ public class Film {
 
     private Set<Long> likes = new HashSet<>();
 
-    @NotNull
-    private List<String> genres;
+    private List<Genre> genres;
 
     @NotNull
-    private String mpaRating;
+    private MpaRating mpa;
+
 }

@@ -30,6 +30,12 @@ public class ErrorHandler {
         return Map.of("error", "Объект не найден: " + e.getMessage());
     }
 
+    @ExceptionHandler(ru.yandex.practicum.filmorate.exception.NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleStorageNotFound(final NotFoundException e) {
+        return Map.of("error", e.getMessage());
+    }
+
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, String> handleAll(final Throwable e) {
